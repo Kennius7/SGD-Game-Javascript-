@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Football Game</title>
+        <link rel="stylesheet" href="./dist/styles.css" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <canvas 
+            id="canvas2" width="250" height="500"
+            class="border-[2px] border-secondaryBlue absolute top-[53%] left-[50%] transform-canvas">
+
+        </canvas>
+        <div class="w-full flex flex-col justify-center items-center mt-4">
+            <div class="flex justify-around items-center bg-slate-300 rounded-[8px] px-5 py-1">
+                <a href="index.html" class="text-secondaryBlue font-sans text-[15px]">
+                    Go Back
+                </a>
+            </div>
+            <div id="timer"></div>
+        </div>
+        <script type="module" src="football.js"></script>
+    </body>
+</html>
