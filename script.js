@@ -5,8 +5,8 @@ let gameSpeed1 = document.getElementById("gameSpeed1");
 let gameSpeed2 = document.getElementById("gameSpeed2");
 
 const ctx = canvas.getContext("2d");
-const canvasWidth = canvas.width = 600;
-const canvasHeight = canvas.height = 600;
+const canvasWidth = canvas.width;
+const canvasHeight = canvas.height;
 
 
 const playerImage = new Image();
