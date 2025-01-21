@@ -646,6 +646,10 @@ video {
   margin-top: 1rem;
 }
 
+.mt-2{
+  margin-top: 0.5rem;
+}
+
 .flex{
   display: flex;
 }
@@ -684,6 +688,14 @@ video {
 
 .w-full{
   width: 100%;
+}
+
+.w-\[350px\]{
+  width: 350px;
+}
+
+.w-\[300px\]{
+  width: 300px;
 }
 
 .transform{
@@ -769,6 +781,11 @@ video {
 .bg-slate-600{
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity, 1));
+}
+
+.bg-slate-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity, 1));
 }
 
 .px-10{
