@@ -1,10 +1,9 @@
-import { easeInOutQuad, latestCoordinates, playerDataArray, posObj } from "./data.js";
+import { latestCoordinates, playerDataArray, posObj } from "./data.js";
 import { Ball, Player } from "./classes.js";
 import { loopAudioBuffer } from "./audioLoopBuffer.js";
 
 const footballPitchCanvas = document.getElementById("canvas2");
 const timer = document.getElementById("timer");
-// const pageLoad = document.getElementById("pageLoad");
 window.addEventListener("DOMContentLoaded", () => loopAudioBuffer("./src/InMatchSounds1.mp3"));
 
 
@@ -22,8 +21,11 @@ const ballSrc = "./src/soccer-ball.png";
 
 let timeVar = 0;
 let loopSpeed = 0;
-let loopVariable = 6;
+let playerSpeed = 2;
+let ballSpeed = 3;
+let loopVariable = 10;
 let playerPass = 6;
+let debugMode = false;
 const playersArray = [];
 let coordinatesArray = [
     {name: 'GK', x: 114.07621359943158, y: -0.43018217170615536}, 
@@ -48,6 +50,14 @@ window.addEventListener("click", () => {
     playerPass++;
 });
 
+window.addEventListener("keydown", (e) => {
+    if (e.key === "d") {
+        debugMode = !debugMode;
+        console.log("Keyboad press check", e);
+    }
+    console.log("Press:", e, "Debug State:", debugMode);
+})
+
 for (let i = 0; i < playerDataArray.length; i++) {
     playersArray.push(
         new Player(playerDataArray[i].src, playerDataArray[i].x, playerDataArray[i].y, playerDataArray[i].name)
@@ -59,16 +69,18 @@ const ball = new Ball(ballSrc, posObj.LCMX + 10, posObj.MidY - 5, 18);
 const loopEngine = () => {
     ctx.clearRect(0, 0, pitchWidth, pitchHeight);
     ctx.drawImage(pitch, 0, 0, fieldWidth, fieldHeight, 0, 0, pitchWidth, pitchHeight);
-    ball.draw(ctx, coordinatesArray[playerPass].x, coordinatesArray[playerPass].y);
+    ball.draw(ctx, coordinatesArray[playerPass].x, coordinatesArray[playerPass].y, debugMode);
     playersArray.forEach((player, i) => {
-        player.draw(ctx);
+        player.draw(ctx, debugMode);
         // console.log("Index:>>>", i);
         if (loopSpeed % loopVariable === 0) {
             player.updateMotion(
+                loopSpeed,
                 playerDataArray[i].minX, 
                 playerDataArray[i].minY, 
                 playerDataArray[i].maxX, 
-                playerDataArray[i].maxY
+                playerDataArray[i].maxY,
+                playerSpeed
             );
             coordinatesArray = latestCoordinates(coordinatesArray, player.getCoordinates(player.name));
         }
@@ -76,12 +88,20 @@ const loopEngine = () => {
     loopSpeed++;
     const ballShiftX = 2;
     const ballShiftY = 2;
+    ball.updateBall(
+        loopSpeed, 
+        coordinatesArray[playerPass].x, 
+        coordinatesArray[playerPass].y, 
+        ballShiftX, 
+        ballShiftY,
+        ballSpeed
+    );
+
     if (loopSpeed % loopVariable === 0) {
         timeVar++;
-        ball.updateBall(coordinatesArray[playerPass].x, coordinatesArray[playerPass].y, ballShiftX, ballShiftY);
-        // console.log("Coordinates Array:", coordinatesArray);
         if (matchStart && timeVar < 2) ball.soundEffect();
     }
+
     timer.textContent = `Time Passed: ${timeVar}`;
     requestAnimationFrame(loopEngine);
 }

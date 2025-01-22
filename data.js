@@ -3,15 +3,11 @@
 
 export const latestCoordinates = (arr, coordObj) => {
     const uniqueKey = "name";
-
     arr.push(coordObj);
-
     const uniqueArray = Object.values(arr.reduce((acc, obj) => {
         acc[obj[uniqueKey]] = obj;
         return acc;
     }, {}))
-
-    // console.log("Latest Array: ", uniqueArray);
     return uniqueArray;
 }
 

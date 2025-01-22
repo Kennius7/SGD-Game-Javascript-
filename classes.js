@@ -13,33 +13,39 @@ export class Player {
         this.height = this.iconDimension;
         this.speed = Math.random() * 2.5 - 2;
     }
-    updateMotion (minX, minY, maxX, maxY) {
-        if (minX - this.x > 0) {
-            this.x += 2;
-            return;
+    updateMotion (gameSpeed, minX, minY, maxX, maxY, playerSpeed) {
+        if (gameSpeed % playerSpeed === 0) {
+            if (minX - this.x > 0) {
+                this.x += 2;
+                return;
+            }
+            if (maxX - this.x < 0) {
+                this.x -= 2;
+                return;
+            }
+            if (minY - this.y > 0) {
+                this.y++;
+                return;
+            }
+            if (maxY - this.y < 0) {
+                this.y--;
+                return;
+            }
+            this.x += Math.random() * 8 - 4;
+            this.y += Math.random() * 4 - 2;
         }
-        if (maxX - this.x < 0) {
-            this.x -= 2;
-            return;
-        }
-        if (minY - this.y > 0) {
-            this.y++;
-            return;
-        }
-        if (maxY - this.y < 0) {
-            this.y--;
-            return;
-        }
-        this.x += Math.random() * 8 - 4;
-        this.y += Math.random() * 4 - 2;
     }
-    draw (ctx) {
+    draw (ctx, debugState) {
+        if (debugState) ctx.strokeRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.playerImage, 0, 0, 180, 180, this.x, this.y, this.width, this.height);
     }
     getCoordinates (name) {
         return { name: name, x: this.x, y: this.y,}
     }
 }
+
+
+
 
 export class Ball {
     constructor(imgSrc, x, y, ballSize) {
@@ -50,34 +56,49 @@ export class Ball {
         this.x = x;
         this.y = y;
         this.trail = [];
+        this.ballPassArray = [
+            { playerX: 93.60194230593385, playerY: 217.58096298004307 },
+            { playerX: 93.60194230593385, playerY: 217.58096298004307 }
+        ];
         this.maxTrailLength = 50;
+        this.maxBallPassLength = 2;
         this.progress = 0;
+        this.frame = 0;
     }
-    draw (ctx, x, y) {
-        ctx.save();
+    draw (ctx, x, y, debugState) {
+        if (debugState) ctx.strokeRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.ballImage, 0, 0, 256, 256, this.x, this.y, this.width, this.height);
-        this.trail.push({ x, y });
-        if (this.trail.length > this.maxTrailLength) this.trail.shift();
-        ctx.beginPath();
-        this.trail.forEach((pos, i) => ctx.lineTo(pos.x, pos.y));
-        ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
-        ctx.stroke();
-        ctx.translate(this.x, this.y);
-        ctx.restore();
+        // ctx.save();
+        // this.trail.push({ x, y });
+        // if (this.trail.length > this.maxTrailLength) this.trail.shift();
+        // ctx.beginPath();
+        // this.trail.forEach((pos, i) => ctx.lineTo(pos.x, pos.y));
+        // ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
+        // ctx.stroke();
+        // ctx.translate(this.x, this.y);
+        // ctx.restore();
     }
     soundEffect () {
         const kickEffect = new Audio();
         kickEffect.src = "./src/ballkick1.mp3";
         kickEffect.play();
     }
-    updateBall (playerX, playerY, subX, subY) {
-        this.progress += 0.01;
+    updateBall (gameSpeed, playerX, playerY, subX, subY, ballSpeed) {
+        this.ballPassArray.push({ playerX, playerY });
+        if (this.ballPassArray.length > this.maxBallPassLength) this.ballPassArray.shift();
+        // console.log("Ball Pass Array:", this.ballPassArray);
+        this.progress += 0.1;
+        // this.frame > ballSpeed ? this.frame = 0 : this.frame++;
         if (this.progress > 1) this.progress = 1;
         const easedProgress = easeInOutQuad(this.progress);
         const addMoveX = (playerX - this.x);
         const addMoveY = (playerY - this.y);
-        this.x += (addMoveX - subX) * easedProgress;
-        this.y += (addMoveY - subY) * easedProgress;
+        // const addMoveX = (this.ballPassArray[1].playerX - this.ballPassArray[0].playerX);
+        // const addMoveY = (this.ballPassArray[1].playerY - this.ballPassArray[0].playerY);
+        if (gameSpeed % ballSpeed === 0) {
+            this.x += (addMoveX - subX) / 7;
+            this.y += (addMoveY - subY) / 7;
+        }
     }
 }
 
