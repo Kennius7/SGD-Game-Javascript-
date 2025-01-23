@@ -13,6 +13,81 @@ export const latestCoordinates = (arr, coordObj) => {
 
 export const easeInOutQuad = t => { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t };
 
+let passTrack = [{ pass: 2 }, { pass: 3 }];
+
+export const randomPasser = (passBool, playerPass, ballSound) => {
+    let maxPassLength = 2;
+    let randomPassGenerator = Math.round((Math.random() * 20) + 1);
+    let addRand = Math.round(Math.random());
+    let pass;
+
+    // if (passTrack[0].pass === passTrack[1].pass) playerPass + 1;
+
+    if (passBool) {
+        if (randomPassGenerator >= 11) {
+            pass = Math.round(randomPassGenerator * 0.5);
+            if (pass === passTrack[1].pass) {
+                pass++;
+                console.log("Pass added...");
+            }
+            playerPass = pass;
+            passTrack.push({ pass: playerPass });
+            console.log("Home Random Number:>>>>", randomPassGenerator);
+        } else {
+            pass = randomPassGenerator;
+            if (pass === passTrack[1].pass) {
+                pass++;
+                console.log("Pass added...");
+            }
+            playerPass = pass;
+            passTrack.push({ pass: playerPass });
+        }
+        console.log("Home Random Number:>>>>", playerPass, "Random Add:", addRand);
+    } else {
+        if (randomPassGenerator <= 10) {
+            pass = (randomPassGenerator * 2) + addRand;
+            console.log("Away Random 1st Multiply:>>>>", pass);
+            if (pass <= 10) {
+                pass = (pass * 2) + addRand;
+                console.log("Away Random 2nd Multiply:>>>>", pass);
+                if (pass <= 10) {
+                    pass = (pass * 2) + addRand;
+                    console.log("Away Random 3rd Multiply:>>>>", pass);
+                    if (pass <= 10) {
+                        pass = (pass * 2) + addRand;
+                        console.log("Away Random 4th Multiply:>>>>", pass);
+                    }
+                }
+            }
+            if (pass === passTrack[1].pass && pass === 21) {
+                pass - 1;
+                console.log("Pass added...");
+            }
+            if (pass === passTrack[1].pass && pass !== 21) {
+                pass++;
+                console.log("Pass added...");
+            }
+            playerPass = pass;
+            passTrack.push({ pass: playerPass });
+            console.log("Away Random Number:>>>>", randomPassGenerator);
+        } else {
+            pass = randomPassGenerator;
+            if (pass === passTrack[1].pass && pass === 21) pass - 1;
+            if (pass === passTrack[1].pass && pass !== 21) {
+                pass++;
+                console.log
+            }
+            playerPass = pass;
+            passTrack.push({ pass: playerPass });
+        }
+        console.log("Away Random Number:>>>>", playerPass, "Random Add:", addRand);
+    }
+    ballSound();
+    if (passTrack.length > maxPassLength) passTrack.shift();
+    console.log("Pass Values:>>>", passTrack[0].pass, passTrack[1].pass);
+    return playerPass;
+}
+
 
 const addVarX = 6;
 const addVarY = 2;

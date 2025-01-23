@@ -1,4 +1,4 @@
-import { latestCoordinates, homePlayerDataArray, awayPlayerDataArray, posObj } from "./data.js";
+import { latestCoordinates, homePlayerDataArray, awayPlayerDataArray, posObj, randomPasser } from "./data.js";
 import { Ball, Player } from "./classes.js";
 import { loopAudioBuffer } from "./audioLoopBuffer.js";
 
@@ -8,6 +8,8 @@ const homePlayerPass = document.getElementById("HPP");
 const homePlayerScore = document.getElementById("HPS");
 const awayPlayerPass = document.getElementById("APP");
 const awayPlayerScore = document.getElementById("APS");
+const incPassSpeed = document.getElementById("INCPS");
+const decPassSpeed = document.getElementById("DECPS");
 
 window.addEventListener("DOMContentLoaded", () => loopAudioBuffer("./src/InMatchSounds1.mp3"));
 
@@ -31,10 +33,16 @@ let ballSpeed = 3;
 let loopVariable = 10;
 let playerPass = 6;
 let debugMode = false;
+let randLoopSpeed = 0;
+let randLoopVar = 100;
+
 const home = true;
 const away = false;
+let homePass = true;
+
 const homePlayersArray = [];
 const awayPlayersArray = [];
+
 let coordinatesArray = [
     {name: 'HGK', x: 114.07621359943158, y: -0.43018217170615536}, 
     {name: 'HLWB', x: 40.94069234932532, y: 49.53273125707716}, 
@@ -60,42 +68,67 @@ let coordinatesArray = [
     {name: 'ARF', x: 145.8210964290545, y: 76.78895699330279}, 
 ]
 
-let matchStart = false;
+// let matchStart = false;
 
 homePlayerPass.addEventListener("click", () => {
     timeVar = 0; 
-    matchStart = true;
+    homePass = true;
     if (playerPass >= 10) playerPass = 1;
     playerPass++;
+    ball.soundEffect();
 });
 
 awayPlayerPass.addEventListener("click", () => {
     timeVar = 0; 
-    matchStart = true;
-    if (playerPass <= 11 || playerPass >= 21) playerPass = 11;
+    homePass = false;
+    if (playerPass <= 11 || playerPass >= 21) playerPass = 16;
     playerPass++;
+    ball.soundEffect();
 });
 
-window.addEventListener("keydown", (e) => {
-    if (e.key === "d") {
-        debugMode = !debugMode;
-        console.log("Keyboad press check", e);
-    }
-    console.log("Press:", e, "Debug State:", debugMode);
-})
+incPassSpeed.addEventListener("click", () => {
+    if (randLoopVar <= 20) return;
+    randLoopVar -= 10;
+});
+
+decPassSpeed.addEventListener("click", () => {
+    if (randLoopVar >= 400) return;
+    randLoopVar += 10;
+});
+
+// window.addEventListener("keydown", (e) => {
+//     if (e.key === "d") {
+//         debugMode = !debugMode;
+//         console.log("Keyboad press check", e);
+//     }
+//     console.log("Press:", e, "Debug State:", debugMode);
+// })
+
+window.addEventListener("click", () => debugMode = !debugMode);
 
 for (let i = 0; i < homePlayerDataArray.length; i++) {
     homePlayersArray.push(
-        new Player(homePlayerDataArray[i].src, homePlayerDataArray[i].x, homePlayerDataArray[i].y, homePlayerDataArray[i].name)
+        new Player(
+            homePlayerDataArray[i].src, 
+            homePlayerDataArray[i].x, 
+            homePlayerDataArray[i].y, 
+            homePlayerDataArray[i].name
+        )
     );
 }
 for (let i = 0; i < awayPlayerDataArray.length; i++) {
     awayPlayersArray.push(
-        new Player(awayPlayerDataArray[i].src, awayPlayerDataArray[i].x, awayPlayerDataArray[i].y, awayPlayerDataArray[i].name)
+        new Player(
+            awayPlayerDataArray[i].src, 
+            awayPlayerDataArray[i].x, 
+            awayPlayerDataArray[i].y, 
+            awayPlayerDataArray[i].name
+        )
     );
 }
 
-const ball = new Ball(ballSrc, posObj.LCMX + 10, posObj.MidY - 5, 18);
+const ball = new Ball(ballSrc, posObj.LCMX + 10, posObj.MidY - 5, 15);
+
 
 const loopEngine = () => {
     ctx.clearRect(0, 0, pitchWidth, pitchHeight);
@@ -103,7 +136,6 @@ const loopEngine = () => {
     ball.draw(ctx, debugMode);
     homePlayersArray.forEach((player, i) => {
         player.draw(ctx, home, debugMode);
-        // console.log("Index:>>>", i);
         if (loopSpeed % loopVariable === 0) {
             player.updateMotion(
                 loopSpeed,
@@ -134,6 +166,7 @@ const loopEngine = () => {
         }
     })
     loopSpeed++;
+    randLoopSpeed++;
     const ballShiftX = 2;
     const ballShiftY = 2;
     ball.updateBall(
@@ -145,9 +178,10 @@ const loopEngine = () => {
         ballSpeed
     );
 
-    if (loopSpeed % loopVariable === 0) {
-        timeVar++;
-        if (matchStart && timeVar < 2) ball.soundEffect();
+    if (loopSpeed % loopVariable === 0) timeVar++;
+
+    if (randLoopSpeed % randLoopVar === 0) {
+        playerPass = randomPasser(homePass, playerPass, ball.soundEffect);
     }
 
     timer.textContent = `Time Passed: ${timeVar}`;
