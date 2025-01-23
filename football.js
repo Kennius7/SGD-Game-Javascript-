@@ -47,14 +47,32 @@ let coordinatesArray = [
     {name: 'HRWF', x: 193.17629146849413, y: 220.49215874760483}, 
     {name: 'HLF', x: 95.66738396217859, y: 429.4761466028511},
     {name: 'HRF', x: 95.66738396217859, y: 429.4761466028511},
-];
+    {name: 'AGK', x: 118.1451142691826, y: 467.49312394023497},
+    {name: 'ALWB', x: 48.50099146813725, y: 427.848394327311},
+    {name: 'ALCB', x: 84.75535794298096, y: 431.96766017244806},
+    {name: 'ARCB', x: 137.6552199585102, y: 431.6726022165926},
+    {name: 'ARWB', x: 190.199791569462, y: 427.013538874227},
+    {name: 'ALWF', x: 38.566300593164456, y: 247.40897097346146},
+    {name: 'ALMF', x: 87.33747793616504, y: 251.49395060895125},
+    {name: 'ARMF', x: 133.08931812147873, y: 249.67346153422145},
+    {name: 'ARWF', x: 187.190483844611, y: 248.8437507055183},
+    {name: 'ALF', x: 90.45021559107525, y: 81.55842256182059},
+    {name: 'ARF', x: 145.8210964290545, y: 76.78895699330279}, 
+]
 
 let matchStart = false;
 
 homePlayerPass.addEventListener("click", () => {
     timeVar = 0; 
     matchStart = true;
-    if (playerPass === 10) playerPass = 1;
+    if (playerPass >= 10) playerPass = 1;
+    playerPass++;
+});
+
+awayPlayerPass.addEventListener("click", () => {
+    timeVar = 0; 
+    matchStart = true;
+    if (playerPass <= 11 || playerPass >= 21) playerPass = 11;
     playerPass++;
 });
 
@@ -96,6 +114,7 @@ const loopEngine = () => {
                 playerSpeed
             );
             coordinatesArray = latestCoordinates(coordinatesArray, player.getCoordinates(player.name));
+            // console.log("Home Coordinate Array:>>>", coordinatesArray);
         }
     })
     awayPlayersArray.forEach((player, i) => {
@@ -111,6 +130,7 @@ const loopEngine = () => {
                 playerSpeed
             );
             coordinatesArray = latestCoordinates(coordinatesArray, player.getCoordinates(player.name));
+            // console.log("Away Coordinate Array:>>>", coordinatesArray);
         }
     })
     loopSpeed++;
