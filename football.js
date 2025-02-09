@@ -3,7 +3,7 @@ import { Ball, Player } from "./classes.js";
 import { loopAudioBuffer } from "./audioLoopBuffer.js";
 
 const footballPitchCanvas = document.getElementById("canvas2");
-const timer = document.getElementById("timer");
+// const timer = document.getElementById("timer");
 const homePlayerPass = document.getElementById("HPP");
 const homePlayerScore = document.getElementById("HPS");
 const awayPlayerPass = document.getElementById("APP");
@@ -184,7 +184,7 @@ const loopEngine = () => {
         playerPass = randomPasser(homePass, playerPass, ball.soundEffect);
     }
 
-    timer.textContent = `Time Passed: ${timeVar}`;
+    // timer.textContent = `Time Passed: ${timeVar}`;
     requestAnimationFrame(loopEngine);
 }
 
