@@ -70,31 +70,51 @@ let coordinatesArray = [
 
 // let matchStart = false;
 
-homePlayerPass.addEventListener("click", () => {
-    timeVar = 0; 
-    homePass = true;
-    if (playerPass >= 10) playerPass = 1;
-    playerPass++;
-    ball.soundEffect();
-});
+// homePlayerPass.addEventListener("click", () => {
+//     timeVar = 0; 
+//     homePass = true;
+//     if (playerPass >= 10) playerPass = 1;
+//     playerPass++;
+//     ball.soundEffect();
+// });
 
-awayPlayerPass.addEventListener("click", () => {
-    timeVar = 0; 
-    homePass = false;
-    if (playerPass <= 11 || playerPass >= 21) playerPass = 16;
-    playerPass++;
-    ball.soundEffect();
-});
+// awayPlayerPass.addEventListener("click", () => {
+//     timeVar = 0; 
+//     homePass = false;
+//     if (playerPass <= 11 || playerPass >= 21) playerPass = 16;
+//     playerPass++;
+//     ball.soundEffect();
+// });
 
-incPassSpeed.addEventListener("click", () => {
-    if (randLoopVar <= 20) return;
-    randLoopVar -= 10;
-});
+// incPassSpeed.addEventListener("click", () => {
+//     if (randLoopVar <= 20) return;
+//     randLoopVar -= 10;
+// });
 
-decPassSpeed.addEventListener("click", () => {
-    if (randLoopVar >= 400) return;
-    randLoopVar += 10;
-});
+// decPassSpeed.addEventListener("click", () => {
+//     if (randLoopVar >= 400) return;
+//     randLoopVar += 10;
+// });
+
+window.addEventListener('message', (event) => {
+    let data;
+    try {
+        data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+        if (data.action === 'homepass') {
+            homePass = true;
+            if (playerPass >= 10) playerPass = 1;
+            playerPass++;
+            ball.soundEffect();
+        } else if (data.action === 'awaypass') {
+            homePass = false;
+            if (playerPass <= 11 || playerPass >= 21) playerPass = 16;
+            playerPass++;
+            ball.soundEffect();
+        }
+    } catch (error) {
+        console.error('Error processing message:', error);
+    }
+})
 
 // window.addEventListener("keydown", (e) => {
 //     if (e.key === "d") {
