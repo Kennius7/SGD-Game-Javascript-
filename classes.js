@@ -38,8 +38,8 @@ export class Player {
     draw (ctx, home, debugState) {
         if (debugState) ctx.strokeRect(this.x, this.y, this.width, this.height);
         if (home) {
-            ctx.drawImage(this.playerImage, 0, 0, 180, 180, this.x, this.y, this.width, this.height);
-        } else { ctx.drawImage(this.playerImage, 0, 0, 342, 342, this.x, this.y, this.width, this.height); }
+            ctx.drawImage(this.playerImage, 0, 0, 360, 360, this.x, this.y, this.width, this.height);
+        } else { ctx.drawImage(this.playerImage, 0, 0, 360, 360, this.x, this.y, this.width, this.height); }
     }
     getCoordinates (name) {
         return { name: name, x: this.x, y: this.y,}
@@ -65,7 +65,7 @@ export class Ball {
     }
     draw (ctx, debugState) {
         if (debugState) ctx.strokeRect(this.x, this.y, this.width, this.height);
-        ctx.drawImage(this.ballImage, 0, 0, 256, 256, this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.ballImage, 0, 0, 360, 360, this.x, this.y, this.width, this.height);
         // ctx.save();
         // this.trail.push({ x, y });
         // if (this.trail.length > this.maxTrailLength) this.trail.shift();

@@ -21,10 +21,10 @@ const pitchWidth = footballPitchCanvas.width;
 const pitchHeight = footballPitchCanvas.height;
 
 const pitch = new Image();
-pitch.src = "./src/FootballPitch.jpg";
+pitch.src = "./src/FootballPitch1.svg";
 const fieldWidth = 360;
 const fieldHeight = 720;
-const ballSrc = "./src/soccer-ball.png";
+const ballSrc = "./src/SoccerBall1.svg";
 
 let timeVar = 0;
 let loopSpeed = 0;

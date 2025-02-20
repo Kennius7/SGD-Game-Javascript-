@@ -100,7 +100,7 @@ export const posObj = {
 export const homePlayerDataArray = [
     { 
         name: "HGK",
-        src: "./src/PlayerIcons-GK.png", 
+        src: "./src/altpics/PlayerIcons-GK.svg", 
         x: posObj.GKX, 
         y: posObj.GKY, 
         minX: posObj.GKX - addVarX, 
@@ -110,7 +110,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HLWB",
-        src: "./src/PlayerIcons-LWB.png", 
+        src: "./src/altpics/PlayerIcons-LWB.svg", 
         x: posObj.LWX, 
         y: posObj.BackY, 
         minX: posObj.LWX - addVarX, 
@@ -120,7 +120,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HLCB",
-        src: "./src/PlayerIcons-LCB.png", 
+        src: "./src/altpics/PlayerIcons-LCB.svg", 
         x: posObj.LCMX, 
         y: posObj.BackY, 
         minX: posObj.LCMX - addVarX, 
@@ -130,7 +130,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HRCB",
-        src: "./src/PlayerIcons-RCB.png", 
+        src: "./src/altpics/PlayerIcons-RCB.svg", 
         x: posObj.RCMX, 
         y: posObj.BackY, 
         minX: posObj.RCMX - addVarX, 
@@ -140,7 +140,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HRWB",
-        src: "./src/PlayerIcons-RWB.png", 
+        src: "./src/altpics/PlayerIcons-RWB.svg", 
         x: posObj.RWX, 
         y: posObj.BackY, 
         minX: posObj.RWX - addVarX, 
@@ -150,7 +150,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HLWF",
-        src: "./src/PlayerIcons-LWF.png", 
+        src: "./src/altpics/PlayerIcons-LWF.svg", 
         x: posObj.LWX, 
         y: posObj.MidY, 
         minX: posObj.LWX - addVarX, 
@@ -160,7 +160,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HLMF",
-        src: "./src/PlayerIcons-LMF.png", 
+        src: "./src/altpics/PlayerIcons-LMF.svg", 
         x: posObj.LCMX, 
         y: posObj.MidY, 
         minX: posObj.LCMX - addVarX, 
@@ -170,7 +170,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HRMF",
-        src: "./src/PlayerIcons-RMF.png", 
+        src: "./src/altpics/PlayerIcons-RMF.svg", 
         x: posObj.RCMX, 
         y: posObj.MidY, 
         minX: posObj.RCMX - addVarX, 
@@ -180,7 +180,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HRWF",
-        src: "./src/PlayerIcons-RWF.png", 
+        src: "./src/altpics/PlayerIcons-RWF.svg", 
         x: posObj.RWX, 
         y: posObj.MidY, 
         minX: posObj.RWX - addVarX, 
@@ -190,7 +190,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HLF",
-        src: "./src/PlayerIcons-LF.png", 
+        src: "./src/altpics/PlayerIcons-LF.svg", 
         x: posObj.LCMX, 
         y: posObj.ForwY, 
         minX: posObj.LCMX - addVarX, 
@@ -200,7 +200,7 @@ export const homePlayerDataArray = [
     },
     { 
         name: "HRF",
-        src: "./src/PlayerIcons-RF.png", 
+        src: "./src/altpics/PlayerIcons-RF.svg", 
         x: posObj.RCMX, 
         y: posObj.ForwY, 
         minX: posObj.RCMX - addVarX, 
@@ -213,7 +213,7 @@ export const homePlayerDataArray = [
 export const awayPlayerDataArray = [
     { 
         name: "AGK",
-        src: "./src/PlayerIcons_A-GK.png", 
+        src: "./src/altpics/PlayerIcons-GK1.svg", 
         x: posObj.GKAX, 
         y: posObj.GKAY, 
         minX: posObj.GKAX - addVarX, 
@@ -223,7 +223,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ALWB",
-        src: "./src/PlayerIcons_A-LWB.png", 
+        src: "./src/altpics/PlayerIcons-LWB1.svg", 
         x: posObj.LWAX, 
         y: posObj.BackAY, 
         minX: posObj.LWAX - addVarX, 
@@ -233,7 +233,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ALCB",
-        src: "./src/PlayerIcons_A-LCB.png", 
+        src: "./src/altpics/PlayerIcons-LCB1.svg", 
         x: posObj.LCMAX, 
         y: posObj.BackAY, 
         minX: posObj.LCMAX - addVarX, 
@@ -243,7 +243,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ARCB",
-        src: "./src/PlayerIcons_A-RCB.png", 
+        src: "./src/altpics/PlayerIcons-RCB1.svg", 
         x: posObj.RCMAX, 
         y: posObj.BackAY, 
         minX: posObj.RCMAX - addVarX, 
@@ -253,7 +253,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ARWB",
-        src: "./src/PlayerIcons_A-RWB.png", 
+        src: "./src/altpics/PlayerIcons-RWB1.svg", 
         x: posObj.RWAX, 
         y: posObj.BackAY, 
         minX: posObj.RWAX - addVarX, 
@@ -263,7 +263,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ALWF",
-        src: "./src/PlayerIcons_A-LWF.png", 
+        src: "./src/altpics/PlayerIcons-LWF1.svg", 
         x: posObj.LWAX, 
         y: posObj.MidAY, 
         minX: posObj.LWAX - addVarX, 
@@ -273,7 +273,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ALMF",
-        src: "./src/PlayerIcons_A-LMF.png", 
+        src: "./src/altpics/PlayerIcons-LMF1.svg", 
         x: posObj.LCMAX, 
         y: posObj.MidAY, 
         minX: posObj.LCMAX - addVarX, 
@@ -283,7 +283,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ARMF",
-        src: "./src/PlayerIcons_A-RMF.png", 
+        src: "./src/altpics/PlayerIcons-RMF1.svg", 
         x: posObj.RCMAX, 
         y: posObj.MidAY, 
         minX: posObj.RCMAX - addVarX, 
@@ -293,7 +293,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ARWF",
-        src: "./src/PlayerIcons_A-RWF.png", 
+        src: "./src/altpics/PlayerIcons-RWF1.svg", 
         x: posObj.RWAX, 
         y: posObj.MidAY, 
         minX: posObj.RWAX - addVarX, 
@@ -303,7 +303,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ALF",
-        src: "./src/PlayerIcons_A-LF.png", 
+        src: "./src/altpics/PlayerIcons-LF1.svg", 
         x: posObj.LCMAX, 
         y: posObj.ForwAY, 
         minX: posObj.LCMAX - addVarX, 
@@ -313,7 +313,7 @@ export const awayPlayerDataArray = [
     },
     { 
         name: "ARF",
-        src: "./src/PlayerIcons_A-RF.png", 
+        src: "./src/altpics/PlayerIcons-RF1.svg", 
         x: posObj.RCMAX, 
         y: posObj.ForwAY, 
         minX: posObj.RCMAX - addVarX, 
