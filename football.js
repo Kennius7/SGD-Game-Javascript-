@@ -74,11 +74,12 @@ window.addEventListener('message', (event) => {
     console.log("WIndow Message Event Listener Fired!");
     try {
         data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
-        console.log("Data:>>", data);
+        // console.log("Data:>>", data);
         if (data.action === 'homepass') {
-            homePass = true;
-            if (playerPass >= 10) playerPass = 1;
-            playerPass++;
+            const playerPass = data.playerPass;
+            // homePass = true;
+            // if (playerPass >= 10) playerPass = 1;
+            // playerPass++;
             ball.webUpdateBall(
                 coordinatesArray[playerPass].x, 
                 coordinatesArray[playerPass].y, 
