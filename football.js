@@ -1,19 +1,10 @@
-import { latestCoordinates, homePlayerDataArray, awayPlayerDataArray, posObj, randomPasser } from "./data.js";
+import { latestCoordinates, homePlayerDataArray, awayPlayerDataArray, posObj, randomPasser, buttonPasser } from "./data.js";
 import { Ball, Player } from "./classes.js";
 import { loopAudioBuffer } from "./audioLoopBuffer.js";
 
+
 const footballPitchCanvas = document.getElementById("canvas2");
-// const timer = document.getElementById("timer");
-const homePlayerPass = document.getElementById("HPP");
-const homePlayerScore = document.getElementById("HPS");
-const awayPlayerPass = document.getElementById("APP");
-const awayPlayerScore = document.getElementById("APS");
-const incPassSpeed = document.getElementById("INCPS");
-const decPassSpeed = document.getElementById("DECPS");
-
-window.addEventListener("DOMContentLoaded", () => loopAudioBuffer("./src/InMatchSounds1.mp3"));
-
-
+// window.addEventListener("DOMContentLoaded", () => loopAudioBuffer("./src/InMatchSounds1.mp3"));
 const ctx = footballPitchCanvas.getContext("2d");
 ctx.imageSmoothingEnabled = true;
 ctx. imageSmoothingQuality = "high";
@@ -35,6 +26,10 @@ let playerPass = 6;
 let debugMode = false;
 let randLoopSpeed = 0;
 let randLoopVar = 100;
+
+const ballShiftX = 2;
+const ballShiftY = 2;
+// let ballAngle = 0;
 
 const home = true;
 const away = false;
@@ -66,49 +61,41 @@ let coordinatesArray = [
     {name: 'ARWF', x: 187.190483844611, y: 248.8437507055183},
     {name: 'ALF', x: 90.45021559107525, y: 81.55842256182059},
     {name: 'ARF', x: 145.8210964290545, y: 76.78895699330279}, 
+    {name: 'HLGOAL', x: 90.4210964290545, y: -0.58895699330279}, 
+    {name: 'HRGOAL', x: 145.8210964290545, y: -0.58895699330279}, 
 ]
 
-// let matchStart = false;
+let goalCoordinates;
 
-// homePlayerPass.addEventListener("click", () => {
-//     timeVar = 0; 
-//     homePass = true;
-//     if (playerPass >= 10) playerPass = 1;
-//     playerPass++;
-//     ball.soundEffect();
-// });
-
-// awayPlayerPass.addEventListener("click", () => {
-//     timeVar = 0; 
-//     homePass = false;
-//     if (playerPass <= 11 || playerPass >= 21) playerPass = 16;
-//     playerPass++;
-//     ball.soundEffect();
-// });
-
-// incPassSpeed.addEventListener("click", () => {
-//     if (randLoopVar <= 20) return;
-//     randLoopVar -= 10;
-// });
-
-// decPassSpeed.addEventListener("click", () => {
-//     if (randLoopVar >= 400) return;
-//     randLoopVar += 10;
-// });
 
 window.addEventListener('message', (event) => {
     let data;
+    // playerPass = buttonPasser(homePass, playerPass);
+    console.log("WIndow Message Event Listener Fired!");
     try {
         data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+        console.log("Data:>>", data);
         if (data.action === 'homepass') {
             homePass = true;
             if (playerPass >= 10) playerPass = 1;
             playerPass++;
+            ball.webUpdateBall(
+                coordinatesArray[playerPass].x, 
+                coordinatesArray[playerPass].y, 
+                ballShiftX, 
+                ballShiftY,
+            )
             ball.soundEffect();
         } else if (data.action === 'awaypass') {
             homePass = false;
             if (playerPass <= 11 || playerPass >= 21) playerPass = 16;
             playerPass++;
+            ball.webUpdateBall(
+                coordinatesArray[playerPass].x, 
+                coordinatesArray[playerPass].y, 
+                ballShiftX, 
+                ballShiftY,
+            )
             ball.soundEffect();
         }
     } catch (error) {
@@ -124,7 +111,7 @@ window.addEventListener('message', (event) => {
 //     console.log("Press:", e, "Debug State:", debugMode);
 // })
 
-window.addEventListener("click", () => debugMode = !debugMode);
+// window.addEventListener("click", () => debugMode = !debugMode);
 
 for (let i = 0; i < homePlayerDataArray.length; i++) {
     homePlayersArray.push(
@@ -187,26 +174,30 @@ const loopEngine = () => {
     })
     loopSpeed++;
     randLoopSpeed++;
-    const ballShiftX = 2;
-    const ballShiftY = 2;
-    ball.updateBall(
-        loopSpeed, 
-        coordinatesArray[playerPass].x, 
-        coordinatesArray[playerPass].y, 
-        ballShiftX, 
-        ballShiftY,
-        ballSpeed
-    );
+    // const ballShiftX = 2;
+    // const ballShiftY = 2;
+    // ball.updateBall(
+    //     loopSpeed, 
+    //     coordinatesArray[playerPass].x, 
+    //     coordinatesArray[playerPass].y, 
+    //     ballShiftX, 
+    //     ballShiftY,
+    //     ballSpeed
+    // );
 
-    if (loopSpeed % loopVariable === 0) timeVar++;
+    // if (loopSpeed % loopVariable === 0) timeVar++;
 
-    if (randLoopSpeed % randLoopVar === 0) {
-        playerPass = randomPasser(homePass, playerPass, ball.soundEffect);
-    }
+    // if (randLoopSpeed % randLoopVar === 0) {
+    //     playerPass = randomPasser(homePass, playerPass, ball.soundEffect);
+    // }
 
     // timer.textContent = `Time Passed: ${timeVar}`;
     requestAnimationFrame(loopEngine);
 }
+
+// ball.ballImage.onload = function () {
+//     loopEngine();
+// }
 
 loopEngine();
 

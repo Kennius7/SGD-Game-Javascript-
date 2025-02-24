@@ -62,19 +62,48 @@ export class Ball {
         this.maxBallPassLength = 2;
         this.progress = 0;
         this.frame = 0;
+        this.angle = 0;
     }
-    draw (ctx, debugState) {
+    // draw (ctx, debugState) {
+    //     if (debugState) ctx.strokeRect(this.x, this.y, this.width, this.height);
+    //     // ctx.save();
+    //     // this.trail.push({ x, y });
+    //     // if (this.trail.length > this.maxTrailLength) this.trail.shift();
+    //     // ctx.beginPath();
+    //     // this.trail.forEach((pos, i) => ctx.lineTo(pos.x, pos.y));
+    //     // ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
+    //     // ctx.stroke();
+    //     // ctx.translate(this.x, this.y);
+    //     // ctx.restore();
+    //     ctx.save();
+    //     ctx.drawImage(this.ballImage, 0, 0, 360, 360, this.x, this.y, this.width, this.height);
+    //     ctx.translate(this.x, this.y);
+    //     ctx.rotate(this.angle * Math.PI / 180);
+    //     // ctx.drawImage(this.ballImage, 0, 0, 360, 360, this.x, this.y, this.width, this.height);
+    //     ctx.restore();
+    //     this.angle += 2;
+    // }
+    draw(ctx, debugState) {
+        if (!this.ballImage.complete) return; // Ensure the image is loaded
+
         if (debugState) ctx.strokeRect(this.x, this.y, this.width, this.height);
-        ctx.drawImage(this.ballImage, 0, 0, 360, 360, this.x, this.y, this.width, this.height);
-        // ctx.save();
-        // this.trail.push({ x, y });
-        // if (this.trail.length > this.maxTrailLength) this.trail.shift();
-        // ctx.beginPath();
-        // this.trail.forEach((pos, i) => ctx.lineTo(pos.x, pos.y));
-        // ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
-        // ctx.stroke();
-        // ctx.translate(this.x, this.y);
-        // ctx.restore();
+
+        ctx.save(); // Save the canvas state
+
+        // Move the canvas origin to the ball's center
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.rotate(this.angle * Math.PI / 45); // Apply rotation
+
+        // Draw image centered at (0,0) after translation
+        ctx.drawImage(
+            this.ballImage,
+            0, 0, 360, 360, 
+            -this.width / 2, -this.height / 2, // Offset to keep image centered
+            this.width, this.height
+        );
+
+        ctx.restore(); // Restore original state
+        this.angle += 2; // Increment angle for continuous spin
     }
     soundEffect () {
         const kickEffect = new Audio();
@@ -84,12 +113,21 @@ export class Ball {
     updateBall (gameSpeed, playerX, playerY, subX, subY, ballSpeed) {
         // this.progress += 0.1;
         // if (this.progress > 1) this.progress = 1;
+
         const addMoveX = (playerX - this.x);
         const addMoveY = (playerY - this.y);
         if (gameSpeed % ballSpeed === 0) {
             this.x += (addMoveX - subX) / 7;
             this.y += (addMoveY - subY) / 7;
         }
+    }
+    webUpdateBall (playerX, playerY, subX, subY) {
+        // this.progress += 0.1;
+        // if (this.progress > 1) this.progress = 1;
+        const addMoveX = (playerX - this.x);
+        const addMoveY = (playerY - this.y);
+        this.x += (addMoveX - subX) / 7;
+        this.y += (addMoveY - subY) / 7;
     }
 }
 
