@@ -76,27 +76,27 @@ window.addEventListener('message', (event) => {
         data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
         // console.log("Data:>>", data);
         if (data.action === 'homepass') {
-            const playerPass = data.playerPass;
+            playerPass = data.playerPass;
             // homePass = true;
             // if (playerPass >= 10) playerPass = 1;
             // playerPass++;
-            ball.webUpdateBall(
-                coordinatesArray[playerPass].x, 
-                coordinatesArray[playerPass].y, 
-                ballShiftX, 
-                ballShiftY,
-            )
+            // ball.webUpdateBall(
+            //     coordinatesArray[playerPass].x, 
+            //     coordinatesArray[playerPass].y, 
+            //     ballShiftX, 
+            //     ballShiftY,
+            // )
             ball.soundEffect();
         } else if (data.action === 'awaypass') {
-            homePass = false;
-            if (playerPass <= 11 || playerPass >= 21) playerPass = 16;
-            playerPass++;
-            ball.webUpdateBall(
-                coordinatesArray[playerPass].x, 
-                coordinatesArray[playerPass].y, 
-                ballShiftX, 
-                ballShiftY,
-            )
+            // homePass = false;
+            // if (playerPass <= 11 || playerPass >= 21) playerPass = 16;
+            playerPass = data.playerPass;
+            // ball.webUpdateBall(
+            //     coordinatesArray[playerPass].x, 
+            //     coordinatesArray[playerPass].y, 
+            //     ballShiftX, 
+            //     ballShiftY,
+            // )
             ball.soundEffect();
         }
     } catch (error) {
@@ -185,6 +185,12 @@ const loopEngine = () => {
     //     ballShiftY,
     //     ballSpeed
     // );
+    ball.webUpdateBall(
+        coordinatesArray[playerPass].x, 
+        coordinatesArray[playerPass].y, 
+        ballShiftX, 
+        ballShiftY,
+    );
 
     // if (loopSpeed % loopVariable === 0) timeVar++;
 
