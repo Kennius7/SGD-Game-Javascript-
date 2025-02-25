@@ -74,34 +74,20 @@ window.addEventListener('message', (event) => {
     console.log("WIndow Message Event Listener Fired!");
     try {
         data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
-        // console.log("Data:>>", data);
         if (data.action === 'homepass') {
             playerPass = data.playerPass;
-            // homePass = true;
-            // if (playerPass >= 10) playerPass = 1;
-            // playerPass++;
-            // ball.webUpdateBall(
-            //     coordinatesArray[playerPass].x, 
-            //     coordinatesArray[playerPass].y, 
-            //     ballShiftX, 
-            //     ballShiftY,
-            // )
             ball.soundEffect();
         } else if (data.action === 'awaypass') {
-            // homePass = false;
-            // if (playerPass <= 11 || playerPass >= 21) playerPass = 16;
             playerPass = data.playerPass;
-            // ball.webUpdateBall(
-            //     coordinatesArray[playerPass].x, 
-            //     coordinatesArray[playerPass].y, 
-            //     ballShiftX, 
-            //     ballShiftY,
-            // )
             ball.soundEffect();
         }
     } catch (error) {
         console.error('Error processing message:', error);
     }
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+    window.ReactNativeWebView.postMessage();
 })
 
 // window.addEventListener("keydown", (e) => {
