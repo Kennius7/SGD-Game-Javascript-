@@ -22,7 +22,7 @@ let loopSpeed = 0;
 let playerSpeed = 2;
 let ballSpeed = 3;
 let loopVariable = 10;
-let playerPass = 6;
+let playerPass = 26;
 let debugMode = false;
 let randLoopSpeed = 0;
 let randLoopVar = 100;
@@ -63,21 +63,30 @@ let coordinatesArray = [
     {name: 'ARF', x: 145.8210964290545, y: 76.78895699330279}, 
     {name: 'HLGOAL', x: 90.4210964290545, y: -0.58895699330279}, 
     {name: 'HRGOAL', x: 145.8210964290545, y: -0.58895699330279}, 
+    {name: 'ALGOAL', x: 90.4210964290545, y: 485.58895699330279}, 
+    {name: 'ARGOAL', x: 145.8210964290545, y: 485.58895699330279}, 
+    {name: 'CENTER', x: 120.8210964290545, y: 240.58895699330279}, 
 ]
 
-let goalCoordinates;
+const randGen = () => { return Math.round(Math.random() + 1) };
 
 
 window.addEventListener('message', (event) => {
     let data;
     // playerPass = buttonPasser(homePass, playerPass);
-    console.log("WIndow Message Event Listener Fired!");
     try {
+        console.log("WIndow Message Event Listener Fired!");
         data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
         if (data.action === 'homepass') {
             playerPass = data.playerPass;
             ball.soundEffect();
         } else if (data.action === 'awaypass') {
+            playerPass = data.playerPass;
+            ball.soundEffect();
+        } else if (data.action === 'homegoal') {
+            playerPass = data.playerPass;
+            ball.soundEffect();
+        } else if (data.action === 'awaygoal') {
             playerPass = data.playerPass;
             ball.soundEffect();
         }
@@ -86,9 +95,12 @@ window.addEventListener('message', (event) => {
     }
 })
 
-document.addEventListener("DOMContentLoaded", () => {
-    window.ReactNativeWebView.postMessage();
-})
+// document.addEventListener("DOMContentLoaded", () => {
+//     console.log("DOM Loaded...");
+//     window.ReactNativeWebView.postMessage({ playerPass: playerPass });
+// })
+
+
 
 // window.addEventListener("keydown", (e) => {
 //     if (e.key === "d") {
