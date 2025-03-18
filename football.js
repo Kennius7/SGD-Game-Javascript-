@@ -89,6 +89,9 @@ window.addEventListener('message', (event) => {
         } else if (data.action === 'awaygoal') {
             playerPass = data.playerPass;
             ball.soundEffect();
+        } else if (data.action === 'centerball') {
+            playerPass = data.playerPass;
+            ball.soundEffect();
         }
     } catch (error) {
         console.error('Error processing message:', error);
@@ -199,10 +202,6 @@ const loopEngine = () => {
     // timer.textContent = `Time Passed: ${timeVar}`;
     requestAnimationFrame(loopEngine);
 }
-
-// ball.ballImage.onload = function () {
-//     loopEngine();
-// }
 
 loopEngine();
 
