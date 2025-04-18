@@ -286,7 +286,7 @@ export const homePlayerDataArray = [
 export const awayPlayerDataArray = [
     { 
         name: "AGK",
-        src: "./src/altpics/PlayerIcons-GK1.png", 
+        src: "./src/altpics/PlayerIcons-GK1.svg", 
         x: posObj.GKAX, 
         y: posObj.GKAY, 
         minX: posObj.GKAX - addVarX, 

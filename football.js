@@ -1,15 +1,59 @@
 import { latestCoordinates, homePlayerDataArray, awayPlayerDataArray, posObj, randomPasser, buttonPasser } from "./data.js";
 import { Ball, Player } from "./classes.js";
-import { loopAudioBuffer } from "./audioLoopBuffer.js";
+// import { loopAudioBuffer } from "./audioLoopBuffer.js";
 
 
 const footballPitchCanvas = document.getElementById("canvas2");
 // window.addEventListener("DOMContentLoaded", () => loopAudioBuffer("./src/InMatchSounds1.mp3"));
 const ctx = footballPitchCanvas.getContext("2d");
-ctx.imageSmoothingEnabled = true;
-ctx. imageSmoothingQuality = "high";
+
+// console.log("Checking the Canvg module:>>>", Canvg);
+if (typeof window.canvg === "undefined") {
+    console.error("Canvg is not loaded!");
+} else {
+    console.log("Canvg is available.");
+}
+
+const fetchCanvasImage = (path, scale=1) => {
+    fetch(path)
+    .then(res => res.text())
+    .then(async svgText => { 
+        ctx.save(); // Save current context state
+        ctx.clearRect(0, 0, footballPitchCanvas.width, footballPitchCanvas.height);
+        ctx.scale(scale, scale); // Apply scale
+        const v = await canvg.Canvg.fromString(ctx, svgText);
+        await v.render();
+        console.log("Rendering...");
+        ctx.restore();
+    })
+    .catch(err => console.error("SVG render error:", err));
+}
+
+// fetch("/src/FootballPitch1.svg")
+// .then(res => res.text())
+// .then(async svgText => { 
+//     const v = await canvg.Canvg.fromString(ctx, svgText);
+//     await v.render();
+// })
+// .catch(err => console.error("SVG render error:", err));
+
+
+// const dpr = window.devicePixelRatio || 1;
+// const rect = footballPitchCanvas.getBoundingClientRect();
+// footballPitchCanvas.width = rect.width * dpr;
+// footballPitchCanvas.height = rect.height * dpr;
+// footballPitchCanvas.style.width = rect.width + "px";
+// footballPitchCanvas.style.height = rect.height + "px";
+
 const pitchWidth = footballPitchCanvas.width;
 const pitchHeight = footballPitchCanvas.height;
+
+// fetchCanvasImage("/src/FootballPitch1.svg");
+fetchCanvasImage("/src/altpics/PlayerIcons-GK1.svg", 0.1);
+
+// ctx.imageSmoothingEnabled = true;
+// ctx. imageSmoothingQuality = "high";
+// ctx.scale(dpr, dpr);
 
 const pitch = new Image();
 pitch.src = "./src/FootballPitch1.svg";
@@ -139,70 +183,70 @@ for (let i = 0; i < awayPlayerDataArray.length; i++) {
 const ball = new Ball(ballSrc, posObj.LCMX + 10, posObj.MidY - 5, 15);
 
 
-const loopEngine = () => {
-    ctx.clearRect(0, 0, pitchWidth, pitchHeight);
-    ctx.drawImage(pitch, 0, 0, fieldWidth, fieldHeight, 0, 0, pitchWidth, pitchHeight);
-    ball.draw(ctx, debugMode);
-    homePlayersArray.forEach((player, i) => {
-        player.draw(ctx, home, debugMode);
-        if (loopSpeed % loopVariable === 0) {
-            player.updateMotion(
-                loopSpeed,
-                homePlayerDataArray[i].minX, 
-                homePlayerDataArray[i].minY, 
-                homePlayerDataArray[i].maxX, 
-                homePlayerDataArray[i].maxY,
-                playerSpeed
-            );
-            coordinatesArray = latestCoordinates(coordinatesArray, player.getCoordinates(player.name));
-            // console.log("Home Coordinate Array:>>>", coordinatesArray);
-        }
-    })
-    awayPlayersArray.forEach((player, i) => {
-        player.draw(ctx, away, debugMode);
-        // console.log("Index:>>>", i);
-        if (loopSpeed % loopVariable === 0) {
-            player.updateMotion(
-                loopSpeed,
-                awayPlayerDataArray[i].minX, 
-                awayPlayerDataArray[i].minY, 
-                awayPlayerDataArray[i].maxX, 
-                awayPlayerDataArray[i].maxY,
-                playerSpeed
-            );
-            coordinatesArray = latestCoordinates(coordinatesArray, player.getCoordinates(player.name));
-            // console.log("Away Coordinate Array:>>>", coordinatesArray);
-        }
-    })
-    loopSpeed++;
-    randLoopSpeed++;
-    // const ballShiftX = 2;
-    // const ballShiftY = 2;
-    // ball.updateBall(
-    //     loopSpeed, 
-    //     coordinatesArray[playerPass].x, 
-    //     coordinatesArray[playerPass].y, 
-    //     ballShiftX, 
-    //     ballShiftY,
-    //     ballSpeed
-    // );
-    ball.webUpdateBall(
-        coordinatesArray[playerPass].x, 
-        coordinatesArray[playerPass].y, 
-        ballShiftX, 
-        ballShiftY,
-    );
+// const loopEngine = () => {
+//     ctx.clearRect(0, 0, pitchWidth, pitchHeight);
+//     ctx.drawImage(pitch, 0, 0, fieldWidth, fieldHeight, 0, 0, pitchWidth, pitchHeight);
+//     ball.draw(ctx, debugMode);
+//     homePlayersArray.forEach((player, i) => {
+//         player.draw(ctx, home, debugMode);
+//         if (loopSpeed % loopVariable === 0) {
+//             player.updateMotion(
+//                 loopSpeed,
+//                 homePlayerDataArray[i].minX, 
+//                 homePlayerDataArray[i].minY, 
+//                 homePlayerDataArray[i].maxX, 
+//                 homePlayerDataArray[i].maxY,
+//                 playerSpeed
+//             );
+//             coordinatesArray = latestCoordinates(coordinatesArray, player.getCoordinates(player.name));
+//             // console.log("Home Coordinate Array:>>>", coordinatesArray);
+//         }
+//     })
+//     awayPlayersArray.forEach((player, i) => {
+//         player.draw(ctx, away, debugMode);
+//         // console.log("Index:>>>", i);
+//         if (loopSpeed % loopVariable === 0) {
+//             player.updateMotion(
+//                 loopSpeed,
+//                 awayPlayerDataArray[i].minX, 
+//                 awayPlayerDataArray[i].minY, 
+//                 awayPlayerDataArray[i].maxX, 
+//                 awayPlayerDataArray[i].maxY,
+//                 playerSpeed
+//             );
+//             coordinatesArray = latestCoordinates(coordinatesArray, player.getCoordinates(player.name));
+//             // console.log("Away Coordinate Array:>>>", coordinatesArray);
+//         }
+//     })
+//     loopSpeed++;
+//     randLoopSpeed++;
+//     // const ballShiftX = 2;
+//     // const ballShiftY = 2;
+//     // ball.updateBall(
+//     //     loopSpeed, 
+//     //     coordinatesArray[playerPass].x, 
+//     //     coordinatesArray[playerPass].y, 
+//     //     ballShiftX, 
+//     //     ballShiftY,
+//     //     ballSpeed
+//     // );
+//     ball.webUpdateBall(
+//         coordinatesArray[playerPass].x, 
+//         coordinatesArray[playerPass].y, 
+//         ballShiftX, 
+//         ballShiftY,
+//     );
 
-    // if (loopSpeed % loopVariable === 0) timeVar++;
+//     // if (loopSpeed % loopVariable === 0) timeVar++;
 
-    // if (randLoopSpeed % randLoopVar === 0) {
-    //     playerPass = randomPasser(homePass, playerPass, ball.soundEffect);
-    // }
+//     // if (randLoopSpeed % randLoopVar === 0) {
+//     //     playerPass = randomPasser(homePass, playerPass, ball.soundEffect);
+//     // }
 
-    // timer.textContent = `Time Passed: ${timeVar}`;
-    requestAnimationFrame(loopEngine);
-}
+//     // timer.textContent = `Time Passed: ${timeVar}`;
+//     requestAnimationFrame(loopEngine);
+// }
 
-loopEngine();
+// loopEngine();
 
 
